@@ -12,6 +12,8 @@
                 <th>Title</th>
                 <th>Currency</th>
                 <th>Description</th>
+                <th>Created by</th>
+                <th>Participants</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +24,12 @@
                 <td>{{ fourcount.title }}</td>
                 <td>{{ fourcount.currency }}</td>
                 <td>{{ fourcount.description }}</td>
+                <td>{{ fourcount.createdby }}</td>
+                <td>
+                    {% for participant in fourcount.participants %}
+                        {{participant}}                    
+                    {% endfor %}
+                </td>
                 <td>
                     <a href="{{ path('fourcount_show', {'id': fourcount.id}) }}">show</a>
                     <a href="{{ path('fourcount_edit', {'id': fourcount.id}) }}">edit</a>

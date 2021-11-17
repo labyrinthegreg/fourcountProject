@@ -9,9 +9,11 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Title</th>
                 <th>Amount</th>
                 <th>Description</th>
                 <th>Date</th>
+                <th>Participants</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -19,9 +21,13 @@
         {% for expense in expenses %}
             <tr>
                 <td>{{ expense.id }}</td>
+                <td>{{ expense.title }}</td>
                 <td>{{ expense.amount }}</td>
                 <td>{{ expense.description }}</td>
                 <td>{{ expense.date ? expense.date|date('Y-m-d') : '' }}</td>
+                <td>{% for participant in expense.users %}
+                    {{participant}}
+                {% endfor %}</td>
                 <td>
                     <a href="{{ path('expense_show', {'id': expense.id}) }}">show</a>
                     <a href="{{ path('expense_edit', {'id': expense.id}) }}">edit</a>
@@ -29,7 +35,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="6">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
