@@ -47,9 +47,19 @@ class Expense
     private $date;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="expenses")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="expenses")
      */
     private $users;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
+
+    public function __toString()
+    {
+        return $this->title;
+    }
 
     public function __construct()
     {
@@ -144,6 +154,18 @@ class Expense
         if ($this->users->removeElement($user)) {
             $user->removeExpense($this);
         }
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }
