@@ -12,6 +12,7 @@ class ExpenseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('title')
             ->add('amount')
             ->add('description')
             ->add('date')
