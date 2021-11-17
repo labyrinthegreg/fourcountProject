@@ -41,9 +41,14 @@ class User
     private $paid_expenses;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Expense::class, inversedBy="users")
+     * @ORM\ManyToMany(targetEntity=Expense::class, mappedBy="users")
      */
     private $expenses;
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     public function __construct()
     {
