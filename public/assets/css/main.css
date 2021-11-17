@@ -1,0 +1,77 @@
+.container-global {
+    width: 70%;  
+    height: 80%;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 20px 8px rgba(0,0,0,0.3); 
+    box-shadow: 0px 0px 20px 8px rgba(0,0,0,0.3);
+    background-color: #f5f5f5;
+}
+body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background: linear-gradient(90deg, rgba(26,219,147,1) 0%, rgba(26,224,137,1) 47%, rgba(0,255,233,1) 100%);
+}
+
+html{
+    height: 100%;
+    margin: 0;
+}
+
+.fourcount-container{
+    position: relative;
+    height: 80%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 65% ;
+    grid-row-gap: 5%;
+    grid-column-gap: 5%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 0 2.5%;
+    margin-bottom: 1.7%;
+}
+
+.fourcount-container a{
+    color: white !important;
+}
+
+a .fourcount-item-container{
+    position: relative;
+    background-image: url("https://picsum.photos/200/300");
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 7px 14px rgba(0, 0, 0, .3);
+}
+
+a {
+    text-decoration: none !important;
+    color: black !important;
+}
+
+.overlay{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, #121212 50%, #121212 70%);
+    transition: .7s ease;
+    opacity: 0;
+}
+
+.fourcount-item-container:hover .overlay{
+    opacity: 1;
+}
+.fourcount-content{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 65%;
+    padding: 0 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}

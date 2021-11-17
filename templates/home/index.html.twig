@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    <h1>Bienvenue sur Fourcount</h1>
+    <div class="fourcount-container">
+     {% if fourcounts %}
+        {% for fourcount in fourcounts %}
+            <a href="{{ path('fourcount_show', {'id': fourcount.id}) }}">
+                <div class="fourcount-item-container">
+                    <div class="overlay">
+                        <div class="fourcount-content">
+                            <div class="fourcount-title">
+                                {{ fourcount.title }}
+                            </div>
+                            <div class="fourcount-description">
+                                {{ fourcount.description }}
+                            </div>
+                            <div class="fourcount-admin">
+                                Made by {{ fourcount.createdBy }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            
+        {% endfor %}
+    {% endif %}
+    </div>
+
+    <a class="btn btn-primary" href="{{ path('fourcount_new') }}"> Créer un fourcount </a>
+   
+{% endblock %}

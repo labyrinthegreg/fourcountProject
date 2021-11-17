@@ -3,14 +3,10 @@
 {% block title %}Fourcount{% endblock %}
 
 {% block body %}
-    <h1>Fourcount</h1>
+    <a href="{{ path('home') }}"><h1>Fourcount</h1></a>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ fourcount.id }}</td>
-            </tr>
             <tr>
                 <th>Title</th>
                 <td>{{ fourcount.title }}</td>

@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Fourcount;
 use App\Form\FourcountType;
 use App\Repository\FourcountRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/fourcount")
@@ -32,6 +33,7 @@ class FourcountController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $fourcount = new Fourcount();
+        $users= $this->getDoctrine()->getRepository(User::class)->findAll();
         $form = $this->createForm(FourcountType::class, $fourcount);
         $form->handleRequest($request);
 
@@ -39,7 +41,7 @@ class FourcountController extends AbstractController
             $entityManager->persist($fourcount);
             $entityManager->flush();
 
-            return $this->redirectToRoute('fourcount_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('fourcount_show', ['id' => $fourcount->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('fourcount/new.html.twig', [
@@ -88,6 +90,6 @@ class FourcountController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('fourcount_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 }
