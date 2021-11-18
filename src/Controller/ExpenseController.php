@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Expense;
+use App\Entity\Fourcount;
 use App\Form\ExpenseType;
 use App\Repository\ExpenseRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/expense")
@@ -27,19 +28,22 @@ class ExpenseController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="expense_new", methods={"GET", "POST"})
+     * @Route("/new/{fourcountId}", name="expense_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, $fourcountId): Response
     {
         $expense = new Expense();
         $form = $this->createForm(ExpenseType::class, $expense);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $fourcount = $this->getDoctrine()->getRepository(Fourcount::class)->find($fourcountId);
+            $expense->setFourcount($fourcount);
             $entityManager->persist($expense);
             $entityManager->flush();
+            
 
-            return $this->redirectToRoute('expense_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('fourcount_show', ['id' => $fourcount->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('expense/new.html.twig', [

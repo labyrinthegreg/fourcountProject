@@ -19,10 +19,19 @@
                 <th>Description</th>
                 <td>{{ fourcount.description }}</td>
             </tr>
+            <tr>
+                <th>Participants</th>
+                <td>
+                {% for participant in fourcount.participants %}
+                    {{ participant }}
+                {% endfor %}
+                </td>
+            </tr>
         </tbody>
     </table>
+    <a href="{{ path('expense_new', {'fourcountId': fourcount.id}) }}" class="btn btn-primary">Ajouter une dépense</a>
 
-    <a href="{{ path('fourcount_index') }}">back to list</a>
+    <a href="{{ path('home') }}">back to list</a>
 
     <a href="{{ path('fourcount_edit', {'id': fourcount.id}) }}">edit</a>
 
