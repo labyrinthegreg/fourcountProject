@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Expense;
 use App\Entity\Fourcount;
 use App\Form\ExpenseType;
+use App\Service\ExportCsvService;
 use App\Repository\ExpenseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,5 +94,19 @@ class ExpenseController extends AbstractController
         }
 
         return $this->redirectToRoute('expense_index', [], Response::HTTP_SEE_OTHER);
+    }
+    /**
+     * @Route("/{id}/download", name="expenses_download")
+     */
+    public function downloadCsv(ExportCsvService $exportCsvService, $id ): Response
+    {
+        $expenses = $this->getDoctrine()->getRepository(Fourcount::class)->find($id)->getExpenses();
+        $exportCsvService->createCsv($expenses);
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="testing.csv"');
+
+        return $response;
+        
     }
 }
