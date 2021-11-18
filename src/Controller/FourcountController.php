@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\Balance;
 use App\Entity\User;
 use App\Entity\Fourcount;
 use App\Form\FourcountType;
@@ -53,10 +54,13 @@ class FourcountController extends AbstractController
     /**
      * @Route("/{id}", name="fourcount_show", methods={"GET"})
      */
-    public function show(Fourcount $fourcount): Response
+    public function show(Fourcount $fourcount, Balance $balance): Response
     {
+        $balance->initArray($fourcount->getParticipants());        
+        $balance_array = $balance->setBalance($fourcount->getExpenses());        
         return $this->render('fourcount/show.html.twig', [
             'fourcount' => $fourcount,
+            'balance' => $balance_array,
         ]);
     }
 
