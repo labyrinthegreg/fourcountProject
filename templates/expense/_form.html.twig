@@ -1,4 +1,41 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="form-group">
+    {{ form_row(form.title, { 'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.amount, { 'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.description, { 'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.date) }}
+    {{ form_row(form.paid_by, { 'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.users, { 'attr': {'class': 'form-control'}}) }}
+
+</div>
+
 {{ form_end(form) }}
+
+{% block javascripts %}
+
+<script>
+
+     $(document).ready(function() {
+        // you may need to change this code if you are not using Bootstrap Datepicker
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+        });
+    });
+
+</script>
+
+{% endblock %}
+
+{% block stylesheets %}
+
+<style>
+.container-global{
+    padding: 10px;
+
+}
+.form-group{
+}
+
+</style>
+{% endblock %}
