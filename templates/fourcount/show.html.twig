@@ -72,6 +72,7 @@
         {% endfor %}
         </tbody>
     </table>
+    <a href="{{ path('expenses_download', {'id': fourcount.id}) }}" class="btn btn-secondary" >Exporter les dépenses</a>
 
 
     {% include "fourcount/chart.html.twig" %}
