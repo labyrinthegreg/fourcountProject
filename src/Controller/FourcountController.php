@@ -3,14 +3,15 @@
 namespace App\Controller;
 
 use App\Service\Balance;
-use App\Entity\User;
 use App\Entity\Fourcount;
 use App\Form\FourcountType;
+use Symfony\UX\Chartjs\Model\Chart;
 use App\Repository\FourcountRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -54,13 +55,26 @@ class FourcountController extends AbstractController
     /**
      * @Route("/{id}", name="fourcount_show", methods={"GET"})
      */
-    public function show(Fourcount $fourcount, Balance $balance): Response
+    public function show(Fourcount $fourcount, Balance $balance, ChartBuilderInterface $chartBuilder): Response
     {
         $balance->initArray($fourcount->getParticipants());        
-        $balance_array = $balance->setBalance($fourcount->getExpenses());        
+        $balance_array = $balance->setBalance($fourcount->getExpenses());
+        $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $chart->setData([
+            'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            'datasets' => [
+                [
+                    'label' => 'Sales!',
+                    'backgroundColor' => 'rgb(255, 99, 132)',
+                    'borderColor' => 'rgb(0, 0, 0)',
+                    'data' => [522, 1500, 2250, 2197, 2345, 3122, 3099],
+                ],
+            ],
+        ]);        
         return $this->render('fourcount/show.html.twig', [
             'fourcount' => $fourcount,
             'balance' => $balance_array,
+            'chart' => $chart,
         ]);
     }
 
