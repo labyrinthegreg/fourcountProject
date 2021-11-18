@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Balance Chart{% endblock %}
+
+{% block body %}
+    <h2>Balance</h2>
+    
+    {% for key,value in balance %}
+        <p>{{key}} | {{value}}</p>
+    {% endfor %}
+
+{% endblock %}
