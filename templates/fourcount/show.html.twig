@@ -4,7 +4,6 @@
 
 {% block body %}
     <a href="{{ path('home') }}"><h1>Fourcount</h1></a>
-
     <table class="table">
         <tbody>
             <tr>
@@ -27,13 +26,13 @@
     <a href="{{ path('fourcount_edit', {'id': fourcount.id}) }}">edit</a>
 
     {{ include('fourcount/_delete_form.html.twig') }}
-
     <table class="table">
         <thead>
             <tr>
                 <th>Title</th>
                 <th>Amount</th>
                 <th>Description</th>
+                <th>%</th>
                 <th>Date</th>
                 <th>Participants</th>
                 <th>actions</th>
@@ -43,8 +42,9 @@
         {% for expense in fourcount.expenses %}
             <tr>
                 <td>{{ expense.title }}</td>
-                <td>{{ expense.amount }}</td>
+                <td>{{ expense.amount }} {{fourcount.currency}}</td>
                 <td>{{ expense.description }}</td>
+                <td>{{ expense.amount / expense.users|length }}</td>
                 <td>{{ expense.date ? expense.date|date('Y-m-d') : '' }}</td>
                 <td>{% for participant in expense.users %}
                     {{participant}}
@@ -62,4 +62,5 @@
         </tbody>
     </table>
 
+    <h2>Balance</h2>
 {% endblock %}
