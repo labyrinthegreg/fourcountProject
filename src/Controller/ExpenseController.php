@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\Entity\Expense;
 use App\Entity\Fourcount;
 use App\Form\ExpenseType;
+use App\Service\MailerService;
 use App\Service\ExportCsvService;
 use App\Repository\ExpenseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -31,7 +33,7 @@ class ExpenseController extends AbstractController
     /**
      * @Route("/new/{fourcountId}", name="expense_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager, $fourcountId): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, $fourcountId, MailerService $mailer, NotifierInterface $notifier): Response
     {
         $expense = new Expense();
         $form = $this->createForm(ExpenseType::class, $expense);
@@ -42,8 +44,9 @@ class ExpenseController extends AbstractController
             $expense->setFourcount($fourcount);
             $entityManager->persist($expense);
             $entityManager->flush();
+            $mailer->sendNotification($notifier, 'robinl.95@orange.fr', $expense);
             
-
+            
             return $this->redirectToRoute('fourcount_show', ['id' => $fourcount->getId()], Response::HTTP_SEE_OTHER);
         }
 
