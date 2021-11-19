@@ -2,9 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\User;
 use App\Entity\Expense;
+use App\Entity\Fourcount;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -26,8 +29,18 @@ class ExpenseType extends AbstractType
                 // adds a class that can be selected in JavaScript
                 'attr' => ['class' => 'datepicker form-control'],
             ])
-            ->add('paid_by')
-            ->add('users')
+            ->add('paid_by', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => "name",
+                'multiple' => false,
+                'choices' => $options['fourcount']->getParticipants(),
+            ])
+            ->add('users', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => "name",
+                'multiple' => true,
+                'choices' => $options['fourcount']->getParticipants(),
+            ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary']
             ])
@@ -38,6 +51,7 @@ class ExpenseType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Expense::class,
+            'fourcount' => false,
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Service\Balance;
+use App\Service\ExportCsvService;
 use App\Entity\Fourcount;
 use App\Form\FourcountType;
 use Symfony\UX\Chartjs\Model\Chart;
@@ -77,6 +78,26 @@ class FourcountController extends AbstractController
             'balance' => $balance_array,
             'chart' => $chart,
         ]);
+    }
+
+    /**
+     * @Route("/{id}/balance/download", name="balance_download")
+     */
+    public function downloadBalenceCsv(ExportCsvService $exportCsvService, Fourcount $fourcount, Balance $balance ): Response
+    {
+        $balance->initArray($fourcount->getParticipants());        
+        $balance_array = $balance->setBalance($fourcount->getExpenses());   
+        return $exportCsvService->createBalanceCsv($balance_array);
+        
+    }
+    /**
+     * @Route("/{id}/expenses/download", name="expenses_download")
+     */
+    public function downloadExpenseCsv(ExportCsvService $exportCsvService, $id ): Response
+    {
+        $expenses = $this->getDoctrine()->getRepository(Fourcount::class)->find($id)->getExpenses();
+        return $exportCsvService->createExpensesCsv($expenses);
+        
     }
 
     /**
