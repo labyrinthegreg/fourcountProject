@@ -19,8 +19,7 @@
                 <td>{{ user.id }}</td>
                 <td>{{ user.name }}</td>
                 <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-secondary">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -31,6 +30,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('user_new') }}">Create new</a>
-    <a href="{{ app.request.headers.get('referer') }}" style="margin:5px;">Retour</a>
+    <a href="{{ path('user_new') }}" class="btn btn-primary">Créer un nouvel utilisateur</a>
+    <a href="{{ path('home') }}" class="btn btn-outline-primary" style="margin:5px;">Retour</a>
 {% endblock %}

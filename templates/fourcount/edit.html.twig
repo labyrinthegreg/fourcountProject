@@ -7,8 +7,8 @@
 
     {{ include('fourcount/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('user_index', {'id': fourcount.id}) }}" style="margin:5px;">Ajouter des participants</a>
-    <a href="{{ path('fourcount_show', {'id': fourcount.id}) }}">back to list</a>
+    <a href="{{ path('user_index', {'id': fourcount.id}) }}" class="btn btn-outline-primary" style="margin:5px;">Ajouter des participants</a>
+    <a href="{{ path('fourcount_show', {'id': fourcount.id}) }}" class="btn btn-secondary">Retour au fourcount</a>
 
     {{ include('fourcount/_delete_form.html.twig') }}
 {% endblock %}
