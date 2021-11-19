@@ -32,5 +32,5 @@
     </table>
 
     <a href="{{ path('user_new') }}">Create new</a>
-    <a href="{{ path('fourcount_index') }}" style="margin:5px;">Retour</a>
+    <a href="{{ app.request.headers.get('referer') }}" style="margin:5px;">Retour</a>
 {% endblock %}
