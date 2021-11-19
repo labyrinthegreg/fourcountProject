@@ -1,22 +1,21 @@
-{% extends 'base.html.twig' %}
 
-{% block title %}Balance Chart{% endblock %}
-
-{% block body %}
-    <h2>Balance</h2>
-    
-    {% for key,value in balance %}
-        <p>{{key}} | 
+{% block balance %}
+    <div class="balance">
+        <h2>Balance</h2>
         
-        {% if value < 0 %}
-            <span style="color:red">{{value}}</span>
-        {% else %}
-            <span style="color:green">{{value}}</span>
-        {% endif %}            
-        </p>
-    {% endfor %}
-    <a href="{{ path('balance_download', {'id': fourcount.id}) }}" class="btn btn-primary">Exporter la balance</a>
+        {% for key,value in balance %}
+            <p>{{key}} | 
+            
+            {% if value < 0 %}
+                <span style="color:red">{{value}}</span>
+            {% else %}
+                <span style="color:green">{{value}}</span>
+            {% endif %}            
+            </p>
+        {% endfor %}
+        <a href="{{ path('balance_download', {'id': fourcount.id}) }}" class="btn btn-primary">Exporter la balance</a>
 
-    {{ render_chart(chart) }}
-
+        {{ render_chart(chart) }}
+    </div>
+    
 {% endblock %}
