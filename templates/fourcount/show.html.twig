@@ -30,11 +30,9 @@
     </table>
     <a href="{{ path('expense_new', {'fourcountId': fourcount.id}) }}" class="btn btn-primary">Ajouter une dépense</a>
 
-    <a href="{{ path('user_index', {'id': fourcount.id}) }}" style="margin:5px;">Ajouter des participants</a>
+    <a href="{{ path('fourcount_edit', {'id': fourcount.id}) }}" style="margin:5px;"><button>Modifier le Fourcount</button></a>
 
-    <a href="{{ path('home') }}">back to list</a>
-
-    <a href="{{ path('fourcount_edit', {'id': fourcount.id}) }}">edit</a>
+    <a href="{{ path('home') }}"><button>Retour à la page d'accueil</button></a>
 
     {{ include('fourcount/_delete_form.html.twig') }}
     <table class="table">
@@ -43,10 +41,9 @@
                 <th>Title</th>
                 <th>Amount</th>
                 <th>Description</th>
-                <th>%</th>
                 <th>Date</th>
                 <th>Participants</th>
-                <th>actions</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -55,14 +52,12 @@
                 <td>{{ expense.title }}</td>
                 <td>{{ expense.amount }} {{fourcount.currency}}</td>
                 <td>{{ expense.description }}</td>
-                <td>{{ expense.amount / expense.users|length }}</td>
                 <td>{{ expense.date ? expense.date|date('Y-m-d') : '' }}</td>
                 <td>{% for participant in expense.users %}
                     {{participant}}
                 {% endfor %}</td>
                 <td>
-                    <a href="{{ path('expense_show', {'id': expense.id}) }}">show</a>
-                    <a href="{{ path('expense_edit', {'id': expense.id}) }}">edit</a>
+                    <a href="{{ path('expense_edit', {'id': expense.id}) }}"><button class="btn btn-secondary">Modifier</button></a>
                 </td>
             </tr>
         {% else %}

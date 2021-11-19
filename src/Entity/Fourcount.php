@@ -46,7 +46,7 @@ class Fourcount
     private $participants;
 
     /**
-     * @ORM\OneToMany(targetEntity=Expense::class, mappedBy="fourcount")
+     * @ORM\OneToMany(targetEntity=Expense::class, mappedBy="fourcount", orphanRemoval=true)
      */
     private $expenses;
 

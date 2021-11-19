@@ -31,7 +31,7 @@ class Balance
     {
         global $array;
         foreach ($expenses as $expense ) {
-            $dette = $expense->getAmount() / count($expense->getUsers());
+            $dette = number_format( $expense->getAmount() / count($expense->getUsers()) , 2);
             $array[$expense->getPaidBy()->getName()] += $expense->getAmount();
             foreach ($expense->getUsers() as $user ) {
                 $array[$user->getName()] -= $dette;
