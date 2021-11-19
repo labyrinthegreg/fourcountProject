@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Service\Balance;
 use App\Entity\Fourcount;
 use App\Form\FourcountType;
@@ -89,7 +90,7 @@ class FourcountController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('fourcount_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('fourcount_show', ['id' => $fourcount->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('fourcount/edit.html.twig', [
