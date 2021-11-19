@@ -8,5 +8,6 @@
     {% for key,value in balance %}
         <p>{{key}} | {{value}}</p>
     {% endfor %}
+    <a href="{{ path('balance_download', {'id': fourcount.id}) }}" class="btn btn-primary">Exporter la balance</a>
 
 {% endblock %}
