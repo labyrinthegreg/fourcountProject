@@ -71,7 +71,8 @@ class ExpenseController extends AbstractController
      */
     public function edit(Request $request, Expense $expense, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(ExpenseType::class, $expense);
+        $fourcount = $this->getDoctrine()->getRepository(Fourcount::class)->find($expense->getFourcount()->getId());
+        $form = $this->createForm(ExpenseType::class, $expense, ['fourcount' => $fourcount]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
