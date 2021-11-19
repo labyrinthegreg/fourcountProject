@@ -31,8 +31,8 @@
                     {% endfor %}
                 </td>
                 <td>
-                    <a href="{{ path('fourcount_show', {'id': fourcount.id}) }}">show</a>
-                    <a href="{{ path('fourcount_edit', {'id': fourcount.id}) }}">edit</a>
+                    <a href="{{ path('fourcount_show', {'id': fourcount.id}) }}"><button>Accéder au fourcount</button></a>
+                    <a href="{{ path('fourcount_edit', {'id': fourcount.id}) }}"><button>Modifier</button></a>
                 </td>
             </tr>
         {% else %}
@@ -43,5 +43,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('fourcount_new') }}">Create new</a>
+    <a href="{{ path('fourcount_new') }}"><button>Créer un nouveau</button></a>
 {% endblock %}
