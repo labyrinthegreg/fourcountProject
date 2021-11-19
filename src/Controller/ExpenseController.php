@@ -36,15 +36,15 @@ class ExpenseController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, $fourcountId, MailerService $mailer, NotifierInterface $notifier): Response
     {
         $expense = new Expense();
-        $form = $this->createForm(ExpenseType::class, $expense);
+        $fourcount = $this->getDoctrine()->getRepository(Fourcount::class)->find($fourcountId);
+        $form = $this->createForm(ExpenseType::class, $expense, ['fourcount' => $fourcount]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $fourcount = $this->getDoctrine()->getRepository(Fourcount::class)->find($fourcountId);
             $expense->setFourcount($fourcount);
             $entityManager->persist($expense);
             $entityManager->flush();
-            $mailer->sendNotification($notifier, 'robinl.95@orange.fr', $expense);
+            //$mailer->sendNotification($notifier, 'robinl.95@orange.fr', $expense);
             
             
             return $this->redirectToRoute('fourcount_show', ['id' => $fourcount->getId()], Response::HTTP_SEE_OTHER);
@@ -77,7 +77,7 @@ class ExpenseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('expense_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('fourcount_show', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('expense/edit.html.twig', [
@@ -98,18 +98,5 @@ class ExpenseController extends AbstractController
 
         return $this->redirectToRoute('expense_index', [], Response::HTTP_SEE_OTHER);
     }
-    /**
-     * @Route("/{id}/download", name="expenses_download")
-     */
-    public function downloadCsv(ExportCsvService $exportCsvService, $id ): Response
-    {
-        $expenses = $this->getDoctrine()->getRepository(Fourcount::class)->find($id)->getExpenses();
-        $exportCsvService->createCsv($expenses);
-        $response = new Response();
-        $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment; filename="testing.csv"');
-
-        return $response;
-        
-    }
+    
 }

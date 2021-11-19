@@ -26,7 +26,6 @@ class MailerService {
         $recipient = new Recipient(
             $email,
         );
-
         // Send the notification to the recipient
         $notifier->send($notification, $recipient);
 
